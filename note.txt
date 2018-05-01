@@ -1,0 +1,20 @@
+==========KONSUMSI API DENGAN JQUERY=============
+=================================================
+
+0. INTRO ================================================================================
+- disini kita akan fokus ke frontendnya, bagaimana mendapatkan data2 yang sebelumnya udah kita sediain di tutorial laravel api.
+- token yang kita kirim ke user (pada saat user login) akan tersimpan di cookie. kita akan belajar bagaimana cara mengambil token tsb melalui cookie dengan jquery.
+
+
+1. MENAMPILKAN DATA2 TUTORIAL ===========================================================
+- pake package carhartl/jquery-cookie utk dapat berinteraksi dengan cookie menggunakan jquery. ambil jquery.cookie.js pada folder src buat file js nya (agar dapat diakses secara local). tambahkan juga jquery.min.js pada index.html. buat juga custom js.
+- pada custom js lakukan load data dengan metode ajax. buat variabel dengan nama base_url agar pada saat mau ngambil data kita nggak perlu nulis endpoint panjang secara berulang.
+- kalo data udah berhasil tampil, kita akan coba beri button untuk menampilkan komentar untuk setiap tutorial nya.
+- berikutnya lakukan ajax juga untuk menampilkan komentar per tutorial.
+
+
+2. LOGIN DAN REGISTER ===================================================================
+- buat form dulu untuk register dan login (satu aja). kemudian langsung buat event post nya di tutorial.js utk register user (menggunakan ajax).
+- kemudian test daftar, dan cek apakah datanya masuk ke database.
+- untuk bagian login, copaste event nya dari halaman register. dan untuk response nya ambil token yang dikirimkan oleh server (menggunakan $.cookie).
+- 
