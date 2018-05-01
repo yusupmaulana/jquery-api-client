@@ -37,7 +37,51 @@ $(document).ready(function() {
   });
 
 
+  // ========== Register user ============
+
+  $(document).on('click', '#register', function(){
+
+    $.ajax({
+      type: "POST",
+      url : base_url + "auth/signup",
+      contentType: "application/json",
+      data: JSON.stringify({
+        username : $('#username').val(),
+        email    : $('#email').val(),
+        password : $('#password').val(),
+      })
+    }).done(function(response){
+      console.log(response);
+      alert("berhasil daftar!");
+      // kosongkan field
+      $('#username').val('');
+      $('#email').val('');
+      $('#password').val('');
+
+      });
+  });
 
 
+  // ========== Login user ============
+
+  $(document).on('click', '#login', function(){
+
+    $.ajax({
+      type: "POST",
+      url : base_url + "auth/signin",
+      contentType: "application/json",
+      data: JSON.stringify({
+        username : $('#username').val(),
+        password : $('#password').val(),
+      })
+    }).done(function(response){
+      $.cookie('token', response.token);
+      alert("berhasil login!");
+      // kosongkan field
+      $('#username').val('');
+      $('#password').val('');
+
+      });
+  });
 
 });
