@@ -17,4 +17,38 @@
 - buat form dulu untuk register dan login (satu aja). kemudian langsung buat event post nya di tutorial.js utk register user (menggunakan ajax).
 - kemudian test daftar, dan cek apakah datanya masuk ke database.
 - untuk bagian login, copaste event nya dari halaman register. dan untuk response nya ambil token yang dikirimkan oleh server (menggunakan $.cookie).
-- 
+
+
+3. AKSES HALAMAN PROFILE ================================================================
+- lihat endpoint server yang ada di laravel (sudah pernah kita buat).
+- kita sudah mengimplementasikan endpoint untuk signup, signin, load all tutorials, single tutorial.
+- berikutnya kita akan masuk ke endpoint yang di proteksi oleh middleware jwt.auth
+- sampai tadi kita udah ngeliat login nya berhasil dan dapat tokennya. harus nya sekarang kita udah bisa mengakses halaman halaman yang di proteksi oleh middleware jwt.auth ini.
+- buat info user di halaman paling atas.
+- idenya setiap login kita munculkan tampilan dari usernya. dibikin toggle setelah login agar muncul ketika user udah login
+- berikutnya buat event untuk akses halaman profile. jangan lupa utk menambahkan headers nya karena untuk mengakses halaman yang diproteksi oleh jwt membutuhkan utk mengirim token sebagai authentikasinya. kalo gapake token maka nggak akan berhasil mengakses.
+
+
+
+4. MENULIS TUTORIAL BARU ================================================================
+- sekarang kita sediakan input untuk membuat tutorial baru. langsung buat event pada tutorial.js untuk mendeteksi kalo tombol submit dari tambah tutorial baru ditekan.
+- berikutnya login dan test tambah tutorialnya. kalo berhasil maka sekarang kita tampilkan tutorial baru tsb langsung tanpa refresh halaman di bagian daftar tutorial.
+
+
+
+5. UPDATE DAN DELETE TUTORIAL ============================================================
+- kita akan melihat bagaimana cara mengedit atau mengupdate suatu tutorial. ada dua cara, kita bisa pake cara biasa yang menyediakan tombol edit nya utk masing2 tutorial. atau membuat sebuah form yang general dan tinggal pilih id mana yang akan kita update.
+- dibawah tutorial baru sediakan form utk edit tutorial.
+- kemudian buat fungsinya untuk mengedit.
+- berikutnya bagaimana cara untuk menghapus tutorial.
+- buat fungsi untuk delete sama dengan edit agar terlihat langsung efeknya, yaitu dengan menambahkan class pada elemen pembungkusnya. kemudian di jquery nya pake metode remove.
+
+
+6. ERROR DAN HANDLE LOGOUT ===============================================================
+- perlu diingat bahwa bagian edit dan delete ini terproteksi dua kali. yang pertama harus login dulu, sementara yang kedua (yang dapat menghapus atau mengedit adalah yang punya tutorial aza).
+- kalo kita login sebagai user yang bukan pemilik tutorial dan mencoba utk mendelete sebuah tutorial. maka akan ada error di console (403 Forbidden).
+- kita akan belajar bagaimana cara menampilkan errornya. kalo menggunakan metode done, maka pasangannya adalah metode fail(). metode fail dichain dengan metode done nya. metode fail(xhr, status, error) memiliki 3 parameter.
+- ketika di console log dari masing2 parameter metode fail(). utk xhr nya kita akan dapat object yang berisi pesan error yang pernah kita buat pada saat mengurus backend nya. kita bisa nampilin langsung data2 ini di frontend.
+- JSON.parse() digunakan untuk mengubah bentuk JSON ke dalam objek javascript.
+- yang terakhir kita akan menghandle metode logout.
+- buat button logout pada bagian info user. kita bisa toggle bagian info user nya agar nggak kelihatan setelah user logout. tp perlu diingat juga ketika kita login, kita menyimpan token. maka dari itu kita harus menghapus tokennya dengan cara $.removeCookie('token').

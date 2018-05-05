@@ -81,7 +81,25 @@ $(document).ready(function() {
       $('#username').val('');
       $('#password').val('');
 
+      $('#user').toggle();
+
       });
+  });
+
+
+  // ========== Akses Halaman Profile ============
+
+  $(document).on('click', '#get_profile', function () {
+
+    $.ajax({
+      type: "GET",
+      url: base_url + "profile",
+      headers: {
+        "Authorization" : 'Bearer ' + $.cookie('token')
+      }
+    }).done(function (response) {
+      console.log(response);
+    });
   });
 
 });
