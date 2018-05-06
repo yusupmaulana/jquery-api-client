@@ -102,4 +102,33 @@ $(document).ready(function() {
     });
   });
 
+
+  // ========== Membuat Tutorial Baru ============
+
+  $(document).on('click', '#send_tut', function () {
+
+    $.ajax({
+      type: "POST",
+      url: base_url + "tutorial",
+      contentType: "application/json",
+      data: JSON.stringify({
+        title: $('#title').val(),
+        body : $('#body').val(),
+      }),
+      headers: {
+        "Authorization": 'Bearer ' + $.cookie('token')
+      }
+    }).done(function (response) {
+      // console.log(response);
+      alert('tutorial berhasil dibuat!');
+      $('#title').val(''); $('#body').val('');
+
+      $('#tutorial').append(
+        "<li>" +
+        response.title +
+        "<button class='show-comments' data-id='" + response.id + "'>Show Comments</button>" +
+        "</li>");
+    });
+  });
+
 });
