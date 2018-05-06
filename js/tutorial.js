@@ -11,8 +11,8 @@ $(document).ready(function() {
     // console.log(response);
     $.each(response, function(i){
       $('#tutorial').append(
-        "<li>" +
-          response[i].title +
+        "<li class='wrapper' data-id='" + response[i].id + "'>" +
+          "<span class='titles' data-id='" + response[i].id + "'>"+ response[i].title +"</span>" +
           "<button class='show-comments' data-id='" + response[i].id + "'>Show Comments</button>" +
         "</li>");
     });
@@ -124,10 +124,59 @@ $(document).ready(function() {
       $('#title').val(''); $('#body').val('');
 
       $('#tutorial').append(
-        "<li>" +
-        response.title +
+        "<li class='wrapper' data-id='" + response.id + "'>" +
+        "<span class='titles' data-id='" + response.id + "'>" + response.title + "</span>" +
         "<button class='show-comments' data-id='" + response.id + "'>Show Comments</button>" +
         "</li>");
+    });
+  });
+
+
+
+  // ========== Edit Tutorial lama ============
+
+  $(document).on('click', '#edit_tut', function () {
+
+    _id = $('#id_tut').val();
+    _title = $('#new_title').val();
+
+    $.ajax({
+      type: "PUT",
+      url: base_url + "tutorial/" + _id,
+      contentType: "application/json",
+      data: JSON.stringify({
+        title: _title,
+        body: $('#new_body').val(),
+      }),
+      headers: {
+        "Authorization": 'Bearer ' + $.cookie('token')
+      }
+    }).done(function (response) {
+      // console.log(response);
+      alert('tutorial berhasil diedit!');
+      $('#new_title').val(''); $('#new_body').val('');
+      $(".titles[data-id="+ _id +"]").text(_title);      
+    });
+  });
+
+
+  // ========== Hapus Tutorial ============
+
+  $(document).on('click', '#del_tut', function () {
+
+    _id = $('#id_tut_del').val();
+    
+
+    $.ajax({
+      type: "DELETE",
+      url: base_url + "tutorial/" + _id,
+      headers: {
+        "Authorization": 'Bearer ' + $.cookie('token')
+      }
+    }).done(function (response) {
+      alert('tutorial berhasil dihapus!');
+      // console.log(response);
+      $(".wrapper[data-id=" + _id + "]").remove();
     });
   });
 
