@@ -128,7 +128,11 @@ $(document).ready(function() {
         "<span class='titles' data-id='" + response.id + "'>" + response.title + "</span>" +
         "<button class='show-comments' data-id='" + response.id + "'>Show Comments</button>" +
         "</li>");
-    });
+      }).fail(function (xhr, status, error) {
+        if (xhr.status == 400) {
+          alert('harus login dulu gan');
+        }
+      });
   });
 
 
@@ -156,6 +160,12 @@ $(document).ready(function() {
       alert('tutorial berhasil diedit!');
       $('#new_title').val(''); $('#new_body').val('');
       $(".titles[data-id="+ _id +"]").text(_title);      
+    }).fail(function(xhr, status, error){
+      if (xhr.status == 403) {
+        alert(JSON.parse(xhr.responseText).error);
+      } else if (xhr.status == 400) {
+        alert('harus login dulu gan');
+      }
     });
   });
 
@@ -165,7 +175,6 @@ $(document).ready(function() {
   $(document).on('click', '#del_tut', function () {
 
     _id = $('#id_tut_del').val();
-    
 
     $.ajax({
       type: "DELETE",
@@ -177,7 +186,20 @@ $(document).ready(function() {
       alert('tutorial berhasil dihapus!');
       // console.log(response);
       $(".wrapper[data-id=" + _id + "]").remove();
+    }).fail(function(xhr, status, error){
+      if(xhr.status == 403){
+        alert(JSON.parse(xhr.responseText).error);
+      }else if(xhr.status == 400){
+        alert('harus login dulu gan');
+      }
     });
+  });
+
+
+  //fungsi untuk logout
+  $('#logout').on('click', function(){
+    $.removeCookie('token');
+    $('#user').toggle();
   });
 
 });
