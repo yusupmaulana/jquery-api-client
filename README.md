@@ -1,1 +1,1 @@
-# konsumsi-api-jquery
+# jquery-api-client
